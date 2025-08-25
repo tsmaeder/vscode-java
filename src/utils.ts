@@ -215,7 +215,11 @@ function getDirectoriesByBuildFile(inclusions: string[], exclusions: string[], f
 
 const detectJdksAtStart: boolean = getJavaConfiguration().get<boolean>('configuration.detectJdksAtStart');
 
-export async function getJavaConfig(javaHome: string) {
+export interface LSSettings {
+
+}
+
+export async function getLanguageServerSettings(javaHome: string) {
 	const origConfig = getJavaConfiguration();
 	const javaConfig = JSON.parse(JSON.stringify(origConfig));
 	javaConfig.home = javaHome;

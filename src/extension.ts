@@ -29,7 +29,7 @@ import { snippetCompletionProvider } from './snippetCompletionProvider';
 import { JavaClassEditorProvider } from './javaClassEditor';
 import { StandardLanguageClient } from './standardLanguageClient';
 import { SyntaxLanguageClient } from './syntaxLanguageClient';
-import { convertToGlob, deleteClientLog, deleteDirectory, ensureExists, getBuildFilePatterns, getExclusionGlob, getInclusionPatternsFromNegatedExclusion, getJavaConfig, getJavaConfiguration, hasBuildToolConflicts, resolveActualCause, getVersion } from './utils';
+import { convertToGlob, deleteClientLog, deleteDirectory, ensureExists, getBuildFilePatterns, getExclusionGlob, getInclusionPatternsFromNegatedExclusion, getLanguageServerSettings, getJavaConfiguration, hasBuildToolConflicts, resolveActualCause, getVersion } from './utils';
 import glob = require('glob');
 import { Telemetry } from './telemetry';
 import { getMessage } from './errorUtils';
@@ -210,7 +210,7 @@ export async function activate(context: ExtensionContext): Promise<ExtensionAPI>
 				initializationOptions: {
 					bundles: collectJavaExtensions(extensions.all),
 					workspaceFolders: workspace.workspaceFolders ? workspace.workspaceFolders.map(f => f.uri.toString()) : null,
-					settings: { java: await getJavaConfig(requirements.java_home) },
+					settings: { java: await getLanguageServerSettings(requirements.java_home) },
 					extendedClientCapabilities: {
 						classFileContentsSupport: true,
 						overrideMethodsPromptSupport: true,
@@ -241,7 +241,7 @@ export async function activate(context: ExtensionContext): Promise<ExtensionAPI>
 						didChangeConfiguration: async () => {
 							await standardClient.getClient().sendNotification(DidChangeConfigurationNotification.type, {
 								settings: {
-									java: await getJavaConfig(requirements.java_home),
+									java: await getLanguageServerSettings(requirements.java_home),
 								}
 							});
 						}

@@ -12,7 +12,7 @@ import { StatusNotification } from "./protocol";
 import { RequirementsData } from "./requirements";
 import { ServerMode } from "./settings";
 import { snippetCompletionProvider } from "./snippetCompletionProvider";
-import { getJavaConfig } from "./utils";
+import { getLanguageServerSettings } from "./utils";
 import { DEBUG } from "./javaServerStarter";
 import { TracingLanguageClient } from "./TracingLanguageClient";
 
@@ -29,7 +29,7 @@ export class SyntaxLanguageClient {
 					didChangeConfiguration: async () => {
 						await this.languageClient.sendNotification(DidChangeConfigurationNotification.type, {
 							settings: {
-								java: await getJavaConfig(requirements.java_home),
+								java: await getLanguageServerSettings(requirements.java_home),
 							}
 						});
 					}
