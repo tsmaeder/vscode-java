@@ -579,6 +579,65 @@
             "default": "ignore",
             "markdownDescription": "Project encoding settings",
             "scope": "window"
+          },
+          "java.import.classpath": {
+            "type": "object",
+            "description": "Fix up the classpath after import",
+            "scope": "window",
+            "order": 11,
+            "additionalProperties": true,
+            "patternProperties": {
+              "^.*$": {
+                "oneOf": [
+                  {
+                    "enum": [
+                      "remove"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "description": "The classpath fixes for a single Java project.",
+                    "properties": {
+                      "path": {
+                        "type": "string",
+                        "description": "The path to the java project folder in the file system in OS-specific format",
+                        "format": "path"
+                      },
+                      "classpath": {
+                        "type": "object",
+                        "patternProperties": {
+                          "^.*$": {
+                            "oneOf": [
+                              {
+                                "enum": [
+                                  "remove"
+                                ]
+                              },
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "requiredProperties": [
+                                    "type"
+                                  ],
+                                  "type": {
+                                    "enum": [
+                                      "source"
+                                    ]
+                                  },
+                                  "output": {
+                                    "type": "string"
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
           }
         }
       },

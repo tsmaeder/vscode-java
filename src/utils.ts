@@ -228,6 +228,7 @@ export async function getJavaConfig(javaHome: string) {
 	// we avoid reading the value from the global scope.
 	javaConfig.project.outputPath = origConfig.inspect<string>("project.outputPath").workspaceValue;
 	javaConfig.project.sourcePaths = origConfig.inspect<string[]>("project.sourcePaths").workspaceValue;
+	javaConfig.import.classpath = origConfig.inspect<any>("import.classpath").workspaceValue || {};
 
 	const editorConfig = workspace.getConfiguration('editor');
 	javaConfig.format.insertSpaces = editorConfig.get('insertSpaces');
